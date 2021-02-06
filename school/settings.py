@@ -124,3 +124,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Email settings
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'school.maintaining.app@gmail.com'
+EMAIL_HOST_PASSWORD = 'u7sYXBrzP6Dh22R'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'School Team <school.maintaining.app@gmail.com>'
