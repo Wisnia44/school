@@ -37,20 +37,20 @@ class UserManager(BaseUserManager):
 
     def create_teacheruser(self, email):
         user = self.create_user(email)
-        user.teacher = True
+        user.is_teacher = True
         user.save(using=self._db)
         return user
 
     def create_principaluser(self, email, password):
         user = self.create_user(email)
-        user.principal = True
+        user.is_principal = True
         user.save(using=self._db)
         return user
 
     def create_superuser(self, email, password):
         user = self.create_user(email,password=password)
-        user.staff = True
-        user.admin = True
+        user.is_staff = True
+        user.is_admin = True
         user.save(using=self._db)
         return user
 

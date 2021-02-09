@@ -1,56 +1,82 @@
 {% load static %}
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
 <div class='container'>
   <a class="navbar-brand" href="{% url 'index' %}">
     <img src="{% static 'images/logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
-    School
+    <h3 class="d-inline-block">School</h3>
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      {% if user.is_authenticated %}
-        <li class="nav-item my-auto">
-          <a class="nav-link active" href="{% url 'index' %}">Twoje usługi</a>
-        </li>
-        <li class="nav-item dropdown active my-auto">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ustawienia konta</a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="{% url 'change-password' %}">Zmień swoje hasło</a>
-            <div class="dropdown-divider"></div>
-          </div>
-        </li>
-        <li class="nav-item my-auto">
-          <a class="nav-link active" href="{% url 'index' %}">Pomoc</a>
-        </li>
-      </ul>
-      <div class='ml-auto'>
-        <img src="{% static 'images/user.png' %}" width="25" height="25" class="d-inline-block align-top" alt="" loading="lazy">
-        {{ user.email}}
-      </div>
-      <div class="ml-3">
-        <form class="logout-link" action="{% url 'user-logout' %}" method="post">
-          {% csrf_token %}
-          <button class="btn btn-outline-dark" type="submit">Wyloguj się</button>
-        </form> 
-      </div>
-      {% else %}
-        <li class="nav-item my-auto">
-          <a class="nav-link disabled" href="#">Twoje usługi</a>
-        </li>
-        <li class="nav-item dropdown disabled my-auto">
-          <a class="nav-link dropdown-toggle disabled" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ustawienia konta</a>
-        </li>
-        <li class="nav-item my-auto">
-          <a class="nav-link active" href="{% url 'index' %}">Pomoc</a>
-        </li>
+
+    {% if user.is_authenticated %}
+
+      {% if user.student or user.teacher or user.parent %}
+
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item my-auto">
+            <a class="nav-link active" href="{% url 'index' %}">Courses</a>
+          </li>
+          <li class="nav-item my-auto">
+            <a class="nav-link active" href="{% url 'index' %}">Messages</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item dropdown active my-auto">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{% static 'images/user.png' %}" width="30" height="30" class="d-inline-block align-down" alt=""   loading="lazy">
+              <p class='d-inline-block'>{{ user.email}}</p></a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'index' %}">Profile</a>
+              <a class="dropdown-item" href="{% url 'change-password' %}">Change password</a>
+            </div>
+          </li>
+        </ul>
+        <div class="ml-3">
+          <form class="logout-link" action="{% url 'user-logout' %}" method="post">
+            {% csrf_token %}
+            <button class="btn btn-outline-light" type="submit">Log out</button>
+          </form> 
+        </div>
+
+      {% elif user.principal %}
+
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item my-auto">
+            <a class="nav-link active" href="{% url 'index' %}">Log in as other user</a>
+          </li>
+          <li class="nav-item my-auto">
+            <a class="nav-link active" href="{% url 'index' %}">Messages</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item dropdown active my-auto">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{% static 'images/user.png' %}" width="30" height="30" class="d-inline-block align-down" alt=""   loading="lazy">
+              <p class='d-inline-block'>{{ user.email}}</p></a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'index' %}">Profile</a>
+              <a class="dropdown-item" href="{% url 'change-password' %}">Change password</a>
+            </div>
+          </li>
+        </ul>
+        <div class="ml-3">
+          <form class="logout-link" action="{% url 'user-logout' %}" method="post">
+            {% csrf_token %}
+            <button class="btn btn-outline-light" type="submit">Log out</button>
+          </form> 
+        </div>
+
+      {% endif %}
+
+    {% else %}
+
+      <ul class="navbar-nav mr-auto">
       </ul>
       <div>
-        <a class="nav-link" href="{% url 'login' %}"><button class="btn btn-outline-primary" type="submit">Zaloguj się</button></a>
+        <a class="login-link ml-auto" href="{% url 'login' %}"><button class="btn btn-outline-primary" type="submit">Log in</button></a>
       </div>
-      {% endif %}
+
+    {% endif %}
     <!--<form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
