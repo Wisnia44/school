@@ -1,0 +1,41 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  {% include 'base/css.html' %}
+  <title>Ponton web app</title>
+  <meta name="description" content="School web app">
+  <meta name="author" content="Tomasz Wiśniewski">
+</head>
+
+<body class="body">
+	{% include 'base/navbar.html' %}
+
+	<div class="container min-vh-100">
+		{% block content %}
+  			template nie załadowany
+		{% endblock %}
+	</div>
+
+  <div class="footer bg-light pt-3 mt-3">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <p><small>Web application School</small></p>
+          <p><small>Author: <b>Tomasz Wiśniewski</b></small></p>
+        </div>
+        <div class="col-12 col-md-6">
+          <p><small></small></p>
+          <p><small>Improve cummunicate beetween students, their parents, teachers and school principal</small></p>
+        </div>
+      </div>
+      
+      
+    </div>
+  </div>
+
+	{% include 'base/js.html' %}
+</body>
+</html> 

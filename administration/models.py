@@ -3,7 +3,6 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.core.mail import send_mail
 from random import choice
 from string import ascii_letters, digits, punctuation
-#from str import join
 
 # Create your models here.
 class UserManager(BaseUserManager):
@@ -27,10 +26,7 @@ class UserManager(BaseUserManager):
             raise ValueError('Users must have an email address')
         if not password:
             password = self.generate_password()
-
-        user = self.model(
-            email=self.normalize_email(email),
-        )
+        user = self.model(email=self.normalize_email(email))
         user.set_password(password)
         user.save(using=self._db)
         self.send_activation_link(email,password)
@@ -52,10 +48,7 @@ class UserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, password):
-        user = self.create_user(
-            email,
-            password=password,
-        )
+        user = self.create_user(email,password=password)
         user.staff = True
         user.admin = True
         user.save(using=self._db)
@@ -66,13 +59,13 @@ class User(AbstractBaseUser):
     email = models.EmailField(verbose_name='Email address', max_length=255, unique=True)
     first_name = models.CharField(verbose_name='First name', max_length=50, null=True, blank=True)
     last_name = models.CharField(verbose_name='Last name', max_length=50, null=True, blank=True)
-    active = models.BooleanField(default=True)
-    staff = models.BooleanField(default=False)
-    admin = models.BooleanField(default=False)
-    student = models.BooleanField(default=False)
-    teacher = models.BooleanField(default=False)
-    parent = models.BooleanField(default=False)
-    principal = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    is_admin = models.BooleanField(default=False)
+    is_student = models.BooleanField(default=False)
+    is_teacher = models.BooleanField(default=False)
+    is_parent = models.BooleanField(default=False)
+    is_principal = models.BooleanField(default=False)
 
     student_index= models.CharField(
         verbose_name='Student index number', 
@@ -101,6 +94,7 @@ class User(AbstractBaseUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
+    list_filter = ('is_admin','is_staff','is_parent','is_active','is_student','is_principal','is_teacher')
     objects = UserManager()
 
     def get_full_name(self):
@@ -118,36 +112,37 @@ class User(AbstractBaseUser):
         return True
 
     @property
-    def is_staff(self):
+    def staff(self):
         "Is the user a member of principal?"
-        return self.staff
+        return self.is_staff
 
     @property
-    def is_admin(self):
+    def admin(self):
         "Is the user a admin member?"
-        return self.admin
+        return self.is_admin
 
     @property
-    def is_active(self):
+    def active(self):
         "Is the user active?"
-        return self.active
+        return self.is_active
 
     @property
-    def is_student(self):
+    def student(self):
         "Is the user a student?"
-        return self.student
+        return self.is_student
     
     @property
-    def is_parent(self):
+    def parent(self):
         "Is the user a parent?"
-        return self.parent
+        return self.is_parent
 
     @property
-    def is_teacher(self):
+    def teacher(self):
         "Is the user a teacher?"
-        return self.teacher
+        return self.is_teacher
 
     @property
-    def is_principal(self):
+    def principal(self):
         "Is the user a member of principal?"
-        return self.principal
+        return self.is_principal
+

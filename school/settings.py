@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+from os import path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -32,6 +33,7 @@ ALLOWED_HOSTS = ['0.0.0.0',]
 
 INSTALLED_APPS = [
     'administration',
+    'users',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -125,6 +127,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = 'staticfiles'
+STATICFILES_DIRS = (path.join(BASE_DIR, "static"),)
 
 # Email settings
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
@@ -134,3 +138,5 @@ EMAIL_HOST_USER = 'school.maintaining.app@gmail.com'
 EMAIL_HOST_PASSWORD = 'u7sYXBrzP6Dh22R'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'School Team <school.maintaining.app@gmail.com>'
+
+LOGIN_REDIRECT_URL = '/'
