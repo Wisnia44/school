@@ -6,6 +6,7 @@ from django.forms.models import model_to_dict
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.mixins import UserPassesTestMixin
 
 def teacher_check(user):
     return user.is_teacher
@@ -62,10 +63,10 @@ class CoursesListView(ListView):
 	def get_queryset(self):
 		queryset = super(CoursesListView, self).get_queryset()
 		if self.request.user.teacher==True:
-			queryset = queryset.filter(teacher=self.request.user)
+			queryset = Course.objects.filter(teacher=self.request.user)
 			print("jkhbfsjhbgiueuh",queryset)
 		elif self.request.user.student==True:
-			queryset = queryset.filter(students__id=self.request.user.pk)
+			queryset = Course.object.filter(students__id=self.request.user.pk)
 			print("xxxxxxxxxxxxxxxxxxxxxxxxxxxx", queryset)
 		return queryset
 
@@ -75,13 +76,14 @@ class CoursesListView(ListView):
 class GradeCreateView(CreateView):
 	model = Grade
 	template_name = 'courses/grade_create.html' 
-	fields = ['grade', 'course', 'student']
+	fields = ['grade', 'student']
 
 	def get_form_kwargs(self,*args,**kwargs):
 		kwargs = super(GradeCreateView, self).get_form_kwargs(*args,**kwargs)
 		if kwargs['instance'] is None:
 			kwargs['instance'] = Grade()
 		kwargs['instance'].teacher = self.request.user
+		kwargs['instance'].course = Course.objects.get(pk=self.kwargs.get('pk'))
 		return kwargs
 
 	def get_success_url(self,*args,**kwargs):
@@ -92,10 +94,6 @@ class GradeCreateView(CreateView):
 class GradeDeleteView(DeleteView):
 	model = Grade
 	template_name = 'courses/grade_delete.html'
-
-	def get_form_kwargs(self,*args,**kwargs):
-		kwargs = super(GradeUpdateView, self).get_form_kwargs(*args,**kwargs)
-		return kwargs
 
 	def get_success_url(self,*args,**kwargs):
 		return reverse('grades', kwargs={'pk':self.object.course.pk})
@@ -111,10 +109,6 @@ class GradeUpdateView(UpdateView):
 	model = Grade
 	template_name = 'courses/grade_update.html' 
 	fields = ['grade', 'course', 'student']
-
-	def get_form_kwargs(self,*args,**kwargs):
-		kwargs = super(GradeUpdateView, self).get_form_kwargs(*args,**kwargs)
-		return kwargs
 
 	def get_success_url(self,*args,**kwargs):
 		return reverse('grade-detail', kwargs={'pk':self.object.pk})
@@ -132,9 +126,59 @@ class GradesListView(ListView):
 
 #ForumPosts views
 @method_decorator(login_required, name='dispatch')
+class ForumPostCreateView(CreateView):
+	model = ForumPost
+	template_name = 'courses/forumpost_create.html' 
+	fields = ['topic', 'content']
+
+	def get_form_kwargs(self,*args,**kwargs):
+		kwargs = super(ForumPostCreateView, self).get_form_kwargs(*args,**kwargs)
+		if kwargs['instance'] is None:
+			kwargs['instance'] = ForumPost()
+		kwargs['instance'].author = self.request.user
+		kwargs['instance'].course = Course.objects.get(pk=self.kwargs.get('pk'))
+		return kwargs
+
+	def get_success_url(self,*args,**kwargs):
+		return reverse('forumpost-detail', kwargs={'pk':self.object.pk})
+
+@method_decorator(login_required, name='dispatch')
+class ForumPostDeleteView(UserPassesTestMixin, DeleteView):
+	model = ForumPost
+	template_name = 'courses/forumpost_delete.html'
+
+	def get_form_kwargs(self,*args,**kwargs):
+		kwargs = super(CourseUpdateView, self).get_form_kwargs(*args,**kwargs)
+		return kwargs
+
+	def get_success_url(self,*args,**kwargs):
+		return reverse('forumposts', kwargs={'pk':self.object.course.pk})
+
+	def test_func(self, *args, **kwargs):
+		post = ForumPost.objects.get(pk=self.kwargs.get('pk'))
+		if self.request.user == post.author:
+			return True
+		return False
+
+@method_decorator(login_required, name='dispatch')
 class ForumPostDetailView(DetailView):
 	model = ForumPost
 	template_name = 'courses/forumpost_detail.html'
+
+@method_decorator(login_required, name='dispatch')
+class ForumPostUpdateView(UserPassesTestMixin, UpdateView):
+	model = ForumPost
+	template_name = 'courses/forumpost_update.html' 
+	fields = ['topic', 'content']
+
+	def get_success_url(self,*args,**kwargs):
+		return reverse('forumpost-detail', kwargs={'pk':self.object.pk})
+
+	def test_func(self, *args, **kwargs):
+		post = ForumPost.objects.get(pk=self.kwargs.get('pk'))
+		if self.request.user == post.author:
+			return True
+		return False
 
 @method_decorator(login_required, name='dispatch')
 class ForumPostsListView(ListView):
@@ -147,5 +191,4 @@ class ForumPostsListView(ListView):
 		queryset = queryset.filter(course=self.kwargs['pk'])
 		return queryset
 
-#forumpost CRUD
 #forumpostcomment CRUD

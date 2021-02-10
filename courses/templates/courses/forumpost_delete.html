@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h4>Do you want to delete post {{object.name}} written by {{object.author}}?</h4>
+	<form method="post">
+		{% csrf_token %}  
+    	<input type="submit" value="Confirm" class="btn btn-success"> 
+	</form>
+{% endblock %} 
