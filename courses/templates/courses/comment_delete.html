@@ -4,6 +4,9 @@
 	<h4>Do you want to delete comment {{object.content}}?</h4>
 	<form method="post">
 		{% csrf_token %}  
-    	<input type="submit" value="Confirm" class="btn btn-success"> 
+	<div class="form-group">
+    	<button type="submit" class="btn btn-success">Submit</button>
+      	<a href="{% url 'comment-detail' pk=object.id %}" class="btn btn-outline-dark">Back to comment</a>
+    </div>
 	</form>
 {% endblock %} 

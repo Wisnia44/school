@@ -21,6 +21,7 @@ from .views import (
 	ForumPostCreateView,
 	ForumPostDeleteView,
 	ForumPostDetailView,
+	ForumPostUpdateView,
 	ForumPostsListView,
 	)
 
@@ -46,5 +47,6 @@ urlpatterns = [
 	#ForumPosts views
 	path('forumpost/<int:pk>/delete/', ForumPostDeleteView.as_view(), name='forumpost-delete'),
 	path('forumpost/<int:pk>/', ForumPostDetailView.as_view(), name='forumpost-detail'),
+	path('forumpost/<int:pk>/update/', ForumPostUpdateView.as_view(), name='forumpost-update'),
 	path('forumpost/<int:pk>/comment/create/', CommentCreateView.as_view(), name='comment-create'),
 ]

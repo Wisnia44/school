@@ -1,8 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <p>Content {{comment.content}}</p>
+  <h4>Comment</h4>
+  <p>Content: {{comment.content}}</p>
   <p>Author: {{comment.author}}</p>
   <p>At: {{comment.datetime}}</p>
   <p>To post: {{comment.forumpost}}</p>
+  <div class="btn-group" role="group" aria-label="Basic example">
+    <a class="nav-link" href="{% url 'comment-update' pk=comment.id %}"><button class="btn  btn-outline-dark" type="submit">Update</button></a>
+    <a class="nav-link" href="{% url 'comment-delete' pk=comment.id %}"><button class="btn  btn-outline-dark" type="submit">Delete</button></a>
+    <a class="nav-link" href="{% url 'forumpost-detail' pk=comment.forumpost.id %}"><button class="btn  btn-outline-dark" type="submit">Back to post</button></a>
+  </div>
 {% endblock %}

@@ -89,6 +89,11 @@ class GradeCreateView(CreateView):
 	def get_success_url(self,*args,**kwargs):
 		return reverse('grade-detail', kwargs={'pk':self.object.pk})
 
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['course'] = Course.objects.get(pk=self.kwargs.get('pk'))
+		return context
+
 @method_decorator(login_required, name='dispatch')
 @method_decorator(user_passes_test(teacher_check), name='dispatch')
 class GradeDeleteView(DeleteView):
@@ -124,6 +129,11 @@ class GradesListView(ListView):
 		queryset = queryset.filter(course=self.kwargs['pk'])
 		return queryset
 
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['course'] = Course.objects.get(pk=self.kwargs.get('pk'))
+		return context
+
 #ForumPosts views
 @method_decorator(login_required, name='dispatch')
 class ForumPostCreateView(CreateView):
@@ -141,6 +151,11 @@ class ForumPostCreateView(CreateView):
 
 	def get_success_url(self,*args,**kwargs):
 		return reverse('forumpost-detail', kwargs={'pk':self.object.pk})
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['course'] = Course.objects.get(pk=self.kwargs.get('pk'))
+		return context
 
 @method_decorator(login_required, name='dispatch')
 class ForumPostDeleteView(UserPassesTestMixin, DeleteView):
@@ -197,6 +212,11 @@ class ForumPostsListView(ListView):
 		queryset = queryset.filter(course=self.kwargs['pk'])
 		return queryset
 
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['course'] = Course.objects.get(pk=self.kwargs.get('pk'))
+		return context
+
 #Comment views
 @method_decorator(login_required, name='dispatch')
 class CommentCreateView(CreateView):
@@ -214,6 +234,11 @@ class CommentCreateView(CreateView):
 
 	def get_success_url(self,*args,**kwargs):
 		return reverse('comment-detail', kwargs={'pk':self.object.pk})
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['forumpost'] = ForumPost.objects.get(pk=self.kwargs.get('pk'))
+		return context
 
 @method_decorator(login_required, name='dispatch')
 class CommentDeleteView(UserPassesTestMixin, DeleteView):

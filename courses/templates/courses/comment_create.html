@@ -5,6 +5,9 @@
   <form method="POST" enctype="multipart/form-data"> 
     {% csrf_token %} 
     {{ form.as_p }} 
-    <input type="submit" value="Submit" class="btn btn-success"> 
+    <div class="form-group">
+      <button type="submit" class="btn btn-success">Submit</button>
+      <a href="{% url 'forumpost-detail' pk=forumpost.id %}" class="btn btn-outline-dark">Back to post</a>
+    </div>
   </form> 
 {% endblock %}
