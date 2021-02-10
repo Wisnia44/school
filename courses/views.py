@@ -1,7 +1,7 @@
 from django.shortcuts import render, reverse
 from django.views import View
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
-from .models import Course, Grade, ForumPost, ForumPostComment
+from .models import Course, Grade, ForumPost, Comment
 from django.forms.models import model_to_dict
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -191,4 +191,54 @@ class ForumPostsListView(ListView):
 		queryset = queryset.filter(course=self.kwargs['pk'])
 		return queryset
 
-#forumpostcomment CRUD
+#Comment views
+@method_decorator(login_required, name='dispatch')
+class CommentCreateView(CreateView):
+	model = Comment
+	template_name = 'courses/comment_create.html' 
+	fields = ['content']
+
+	def get_form_kwargs(self,*args,**kwargs):
+		kwargs = super(CommentCreateView, self).get_form_kwargs(*args,**kwargs)
+		if kwargs['instance'] is None:
+			kwargs['instance'] = Comment()
+		kwargs['instance'].author = self.request.user
+		kwargs['instance'].forumpost = ForumPost.objects.get(pk=self.kwargs.get('pk'))
+		return kwargs
+
+	def get_success_url(self,*args,**kwargs):
+		return reverse('comment-detail', kwargs={'pk':self.object.pk})
+
+@method_decorator(login_required, name='dispatch')
+class CommentDeleteView(UserPassesTestMixin, DeleteView):
+	model = Comment
+	template_name = 'courses/comment_delete.html'
+
+	def get_success_url(self,*args,**kwargs):
+		return reverse('forumpost-detail', kwargs={'pk':self.object.forumpost.pk})
+
+	def test_func(self, *args, **kwargs):
+		comment = Comment.objects.get(pk=self.kwargs.get('pk'))
+		if self.request.user == comment.author:
+			return True
+		return False
+
+@method_decorator(login_required, name='dispatch')
+class CommentDetailView(DetailView):
+	model = Comment
+	template_name = 'courses/comment_detail.html'
+
+@method_decorator(login_required, name='dispatch')
+class CommentUpdateView(UserPassesTestMixin, UpdateView):
+	model = Comment
+	template_name = 'courses/comment_update.html' 
+	fields = ['content']
+
+	def get_success_url(self,*args,**kwargs):
+		return reverse('comment-detail', kwargs={'pk':self.object.pk})
+
+	def test_func(self, *args, **kwargs):
+		comment = Comment.objects.get(pk=self.kwargs.get('pk'))
+		if self.request.user == comment.author:
+			return True
+		return Falsee

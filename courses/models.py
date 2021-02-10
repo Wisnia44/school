@@ -30,8 +30,11 @@ class ForumPost(models.Model):
 	def get_absolute_url(self):
 		return reverse('forumpost-detail', args=[str(self.pk)])
 
-class ForumPostComment(models.Model):
+class Comment(models.Model):
 	content = models.CharField(max_length=300)
 	datetime = models.DateTimeField(auto_now_add=True)
 	author = models.ForeignKey(User, on_delete=models.DO_NOTHING)
 	forumpost = models.ForeignKey(ForumPost, on_delete=models.DO_NOTHING)
+
+	def get_absolute_url(self):
+		return reverse('comment-detail', args=[str(self.pk)])
