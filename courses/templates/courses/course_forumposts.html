@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h4>Forum</h4>
+  {% if forumposts %}
+  	<ul>
+    	{% for forumpost in forumposts %}
+      	<li><a href="{{ forumpost.get_absolute_url }}">{{forumpost.topic}}</a>(Written by:{{forumpost.author}})</li>
+    	{% endfor %}
+  	</ul>
+  {% else %}
+    <p>There are no posts in this Forum.</p>
+  {% endif %}
+
+{% endblock %}

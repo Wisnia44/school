@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h4>Grades</h4>
+  {% if grades %}
+  	<ul>
+    	{% for grade in grades %}
+      	<li><a href="{{ grade.get_absolute_url }}">{{ grade.grade }}</a>({{grade.datetime}})</li>
+    	{% endfor %}
+  	</ul>
+  {% else %}
+    <p>There are no grades.</p>
+  {% endif %}
+
+{% endblock %}

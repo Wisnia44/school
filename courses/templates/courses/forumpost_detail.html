@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h4>ForumPost {{forumpost.topic}}</h4>
+  <p>{{forumpost.content}}</p>
+  <p>Author: {{forumpost.author}}</p>
+  <p>Course: {{forumpost.course}}</p>
+  <p>Created at: {{forumpost.datetime}}</p>
+{% endblock %}

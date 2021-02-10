@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h4>Grade {{grade.grade}}</h4>
+  <p>Course {{grade.course}}</p>
+  <p>Given by: {{grade.teacher}}</p>
+  <p>For student: {{grade.student}}</p>
+  <p>At: {{grade.datetime}}</p>
+{% endblock %}
