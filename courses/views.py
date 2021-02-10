@@ -165,6 +165,12 @@ class ForumPostDetailView(DetailView):
 	model = ForumPost
 	template_name = 'courses/forumpost_detail.html'
 
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		post = ForumPost.objects.get(pk=self.kwargs.get('pk'))
+		context['comments'] = Comment.objects.filter(forumpost=post).order_by('datetime')
+		return context
+
 @method_decorator(login_required, name='dispatch')
 class ForumPostUpdateView(UserPassesTestMixin, UpdateView):
 	model = ForumPost

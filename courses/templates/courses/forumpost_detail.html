@@ -6,4 +6,18 @@
   <p>Author: {{forumpost.author}}</p>
   <p>Course: {{forumpost.course}}</p>
   <p>Created at: {{forumpost.datetime}}</p>
+  <br/>
+  <h5>Comments:</h5>
+  {% if comments %}
+  	<ul>
+    	{% for comment in comments %}
+      	<li>
+      		<a href="{{ comment.get_absolute_url }}">{{ comment.content }}</a><br/>
+      		<p>Author:{{comment.author}}</p>
+      	</li>
+    	{% endfor %}
+  	</ul>
+  {% else %}
+    <p>There are no courses.</p>
+  {% endif %}
 {% endblock %}
