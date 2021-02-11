@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h4>Create reply message</h4>
+  <p>To message: {{prev_message.topic}} from {{message.author}}</p>
+  <form method="POST" enctype="multipart/form-data"> 
+    {% csrf_token %} 
+    {{ form.as_p }} 
+	<div class="form-group">
+      <button type="submit" class="btn btn-success">Submit</button>
+      <a href="{% url 'messages-received' %}" class="btn btn-outline-dark">Back to received messages list</a>
+    </div>
+  </form> 
+{% endblock %}

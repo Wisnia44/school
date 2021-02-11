@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <h4>Messages</h4>
+    </div>
+    <div class="col-12 col-md-4 col-lg-2 ml-lg-auto">
+      <a class="nav-link" href="{% url 'message-create' %}"><button class="btn btn-outline-primary" type="submit">Send new</button></a>
+    </div>
+  </div>
+  {% if messages %}
+    <ul class="list-group list-group-flush">
+      {% for message in messages %}
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-12 col-md-5 my-auto">
+              <a class="text-dark" href="{{ message.get_absolute_url }}">{{message.topic}}</a>
+            </div>
+            <div class="col-4">
+              <div class="btn-group" role="group" aria-label="Basic example">
+                <a class="nav-link" href="{{ message.get_absolute_url }}"><button class="btn btn-outline-primary"   type="submit">Show details</button></a>
+              </div>
+            </div>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>There are no messages.</p>
+  {% endif %}
+{% endblock %}

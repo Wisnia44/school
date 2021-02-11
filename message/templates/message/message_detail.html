@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h4>Message: {{message.topic}}</h4>
+  <p>From: {{message.author}}</p>
+  <p>To: {{message.receiver}}</p>
+  <p>In reply on: {{message.in_reply_to}}</p>
+  <p>Content: {{message.content}}</p>
+
+  <div class="btn-group" role="group">
+  	{% if message.receiver == user %}
+  	<a class="nav-link" href="{% url 'message-reply-create' pk=message.id %}"><button class="btn  btn-outline-dark" type="submit">Reply</button></a>
+  	{% endif %}
+  	<a class="nav-link" href="{% url 'messages-received' %}"><button class="btn  btn-outline-dark" type="submit">Back to received messages list</button></a>
+  </div>
+{% endblock %}

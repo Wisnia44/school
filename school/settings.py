@@ -35,6 +35,7 @@ ALLOWED_HOSTS = ['0.0.0.0',]
 INSTALLED_APPS = [
     'administration',
     'courses',
+    'message',
     'users',
 
     'django.contrib.admin',
