@@ -18,8 +18,12 @@
           <li class="nav-item my-auto">
             <a class="nav-link active" href="{% url 'courses-list' %}">Courses</a>
           </li>
-          <li class="nav-item my-auto">
-            <a class="nav-link active" href="{% url 'index' %}">Messages</a>
+          <li class="nav-item dropdown active my-auto">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Messages</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'messages-received'%}">Received messages</a>
+              <a class="dropdown-item" href="{% url 'messages-sent' %}">Sent messages</a>
+            </div>
           </li>
         </ul>
         <ul class="navbar-nav ml-auto">
@@ -46,7 +50,7 @@
             <a class="nav-link active" href="{% url 'index' %}">Log in as other user</a>
           </li>
           <li class="nav-item my-auto">
-            <a class="nav-link active" href="{% url 'index' %}">Messages</a>
+            <a class="nav-link active" href="{% url 'messages' %}">Messages</a>
           </li>
         </ul>
         <ul class="navbar-nav ml-auto">
