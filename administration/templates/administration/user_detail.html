@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h4>Your user profile</h4>
+
+  <p>First name: {{user.first_name}}</p>
+  <p>Last name: {{user.last_name}}</p>
+  <p>Email address: {{user.email}}</p>
+
+  {% if user.student %}
+  	<p>Index number: {{user.student_index}}</p>
+  	<p>Parent 1: {{user.parent1}}</p>
+  	<p>Parent 2: {{user.parent2}}</p>
+  {% endif %}
+
+  <p><small>If you spot some errors please contact admin: <i>school.maintaining.app@gmail.com</i></small></p>
+
+{% endblock %}

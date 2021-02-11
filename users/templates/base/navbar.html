@@ -16,7 +16,7 @@
 
         <ul class="navbar-nav mr-auto">
           <li class="nav-item my-auto">
-            <a class="nav-link active" href="{% url 'index' %}">Courses</a>
+            <a class="nav-link active" href="{% url 'courses-list' %}">Courses</a>
           </li>
           <li class="nav-item my-auto">
             <a class="nav-link active" href="{% url 'index' %}">Messages</a>
@@ -27,7 +27,7 @@
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{% static 'images/user.png' %}" width="30" height="30" class="d-inline-block align-down" alt=""   loading="lazy">
               <p class='d-inline-block'>{{ user.email}}</p></a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="{% url 'index' %}">Profile</a>
+              <a class="dropdown-item" href="{% url 'user-profile'%}">Profile</a>
               <a class="dropdown-item" href="{% url 'change-password' %}">Change password</a>
             </div>
           </li>
@@ -54,7 +54,7 @@
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{% static 'images/user.png' %}" width="30" height="30" class="d-inline-block align-down" alt=""   loading="lazy">
               <p class='d-inline-block'>{{ user.email}}</p></a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="{% url 'index' %}">Profile</a>
+              <a class="dropdown-item" href="{% url 'user-profile'%}">Profile</a>
               <a class="dropdown-item" href="{% url 'change-password' %}">Change password</a>
             </div>
           </li>

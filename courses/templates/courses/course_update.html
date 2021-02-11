@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h4>Do you want to update this course?</h4>
+  <form method="POST" enctype="multipart/form-data"> 
+    {% csrf_token %} 
+    {{ form.as_p }} 
+    <div class="form-group">
+      <button type="submit" class="btn btn-success">Submit</button>
+      <a href="{% url 'course-detail' pk=course.id %}" class="btn btn-outline-dark">Back to course</a>
+    </div>
+  </form> 
+{% endblock %}

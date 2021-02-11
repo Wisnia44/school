@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 from os import path
+from django.urls import reverse
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -33,6 +34,7 @@ ALLOWED_HOSTS = ['0.0.0.0',]
 
 INSTALLED_APPS = [
     'administration',
+    'courses',
     'users',
 
     'django.contrib.admin',
@@ -140,3 +142,4 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'School Team <school.maintaining.app@gmail.com>'
 
 LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/login/'

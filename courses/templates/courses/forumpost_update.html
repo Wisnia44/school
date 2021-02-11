@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h4>Do you want to update this post?</h4>
+  <form method="POST" enctype="multipart/form-data"> 
+    {% csrf_token %} 
+    {{ form.as_p }} 
+    <div class="form-group">
+    	<button type="submit" class="btn btn-success">Submit</button>
+      	<a href="{% url 'forumpost-detail' pk=object.id %}" class="btn btn-outline-dark">Back to post</a>
+    </div> 
+  </form> 
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h4>Do you want to delete course {{object.name}} taught by {{object.teacher}}?</h4>
+	<form method="post">
+		{% csrf_token %}  
+    	<div class="form-group">
+    		<button type="submit" class="btn btn-success">Submit</button>
+      		<a href="{% url 'course-detail' pk=course.id %}" class="btn btn-outline-dark">Back to course</a>
+    	</div> 
+	</form>
+{% endblock %} 

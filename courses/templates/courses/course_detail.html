@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h4>Course {{course.name}}</h4>
+  <p>Teacher: {{course.teacher}}</p>
+
+  <div class="btn-group" role="group">
+	 <a class="nav-link" href="./forumposts"><button class="btn btn-outline-dark" type="submit">Forum</button></a>
+	 <a class="nav-link" href="./grades"><button class="btn btn-outline-dark" type="submit">Grades</button></a>
+   <a class="nav-link" href="{% url 'course-update' pk=course.id %}"><button class="btn  btn-outline-dark" type="submit">Update</button></a>
+   <a class="nav-link" href="{% url 'course-delete' pk=course.id %}"><button class="btn  btn-outline-dark" type="submit">Delete</button></a>
+   <a class="nav-link" href="{% url 'courses-list' %}"><button class="btn  btn-outline-dark" type="submit">Back to courses list</button></a>
+  </div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <h4>Courses</h4>
+    </div>
+    {% if user.teacher %}
+      <div class="col-12 col-md-4 col-lg-2 ml-lg-auto">
+        <a class="nav-link" href="{% url 'course-create' %}"><button class="btn btn-outline-primary" type="submit">Add new</button></a>
+      </div>
+    {% endif %}
+  </div>
+  {% if courses %}
+    <ul class="list-group list-group-flush">
+      {% for course in courses %}
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-12 col-md-5 my-auto">
+              <a class="text-dark" href="{{ course.get_absolute_url }}">{{course.name}}</a>
+            </div>
+            <div class="col-7">
+              <div class="btn-group" role="group" aria-label="Basic example">
+                <a class="nav-link" href="{{ course.get_absolute_url }}"><button class="btn btn-outline-primary"   type="submit">Show details</button></a>
+                <a class="nav-link" href="{% url 'course-update' pk=course.id %}"><button class="btn  btn-outline-dark" type="submit">Update</button></a>
+                <a class="nav-link" href="{% url 'course-delete' pk=course.id %}"><button class="btn  btn-outline-dark" type="submit">Delete</button></a>
+              </div>
+            </div>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>There are no courses.</p>
+  {% endif %}
+{% endblock %}

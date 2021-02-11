@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h4>Do you want to delete grade {{object.grade}} for {{object.student}}?</h4>
+	<form method="post">
+		{% csrf_token %}  
+    	<div class="form-group">
+    		<button type="submit" class="btn btn-success">Submit</button>
+      		<a href="{% url 'grade-detail' pk=object.id %}" class="btn btn-outline-dark">Back to grade</a>
+    	</div> 
+	</form>
+{% endblock %} 
