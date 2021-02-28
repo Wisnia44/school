@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from courses.models import Course
+from courses.models import Course, Grade
 
 class CourseSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -10,6 +10,13 @@ class CourseSerializer(serializers.ModelSerializer):
 			'students',
 		]
 
-	def get_url(self, obj):
-		request = self.context.get("request")
-		return obj.get_api_url(request=request)
+class GradeSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Grade
+		fields = [
+			'grade',
+			'course',
+			'student',
+			'teacher',
+			'datetime',
+		]
