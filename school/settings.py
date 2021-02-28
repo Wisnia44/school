@@ -34,9 +34,14 @@ ALLOWED_HOSTS = ['0.0.0.0',]
 
 INSTALLED_APPS = [
     'administration',
+    'api',
     'courses',
     'message',
     'users',
+
+    'rest_framework',
+    'rest_framework.authtoken',
+    'drf_yasg',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -144,3 +149,11 @@ DEFAULT_FROM_EMAIL = 'School Team <school.maintaining.app@gmail.com>'
 
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/login/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json'
+}
