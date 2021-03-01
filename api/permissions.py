@@ -31,3 +31,15 @@ class ForumPostPermission(permissions.BasePermission):
 			if request.method == 'GET':
 				return True
 		return False
+
+class CommentPermission(permissions.BasePermission):
+
+	def has_obj_permission(self, request, view, obj):
+		if request.user.is_authenticated:
+			if request.user.is_principal:
+				return True
+			if request.user == obj.author:
+				return True
+			if request.method == 'GET':
+				return True
+		return False
