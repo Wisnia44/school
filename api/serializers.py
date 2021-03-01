@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from courses.models import Course, Grade, ForumPost, Comment
+from message.models import Message
 
 class CourseSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -19,4 +20,9 @@ class ForumPostSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Comment
+		fields = '__all__'
+
+class MessageSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Message
 		fields = '__all__'

@@ -43,3 +43,10 @@ class CommentPermission(permissions.BasePermission):
 			if request.method == 'GET':
 				return True
 		return False
+
+class MessagePermission(permissions.BasePermission):
+
+	def has_permission(self, request, view):
+		if request.user.is_authenticated and request.method in permissions.SAFE_METHODS:
+			return True
+		return False

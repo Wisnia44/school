@@ -1,9 +1,21 @@
 from rest_framework import viewsets
-from rest_framework import status
-from rest_framework.response import Response
-from .serializers import CourseSerializer, GradeSerializer, ForumPostSerializer, CommentSerializer
-from .permissions import CoursePermission, GradePermission, ForumPostPermission, CommentPermission
+from django.db.models import Q
+from .serializers import (
+    CourseSerializer, 
+    GradeSerializer, 
+    ForumPostSerializer, 
+    CommentSerializer, 
+    MessageSerializer,
+    )
+from .permissions import (
+    CoursePermission, 
+    GradePermission, 
+    ForumPostPermission, 
+    CommentPermission, 
+    MessagePermission,
+    )
 from courses.models import Course, Grade, ForumPost, Comment
+from message.models import Message
 
 class CourseViewSet(viewsets.ModelViewSet):
     permission_classes = [CoursePermission]
@@ -58,3 +70,13 @@ class CommentViewSet(viewsets.ModelViewSet):
             return Comment.objects.filter(forumpost__course__students__id=self.request.user.pk)
         else:
             return Comment.objects.none()
+
+class MessageViewSet(viewsets.ModelViewSet):
+    permission_classes = [MessagePermission]
+    serializer_class = MessageSerializer
+
+    def get_queryset(self):
+        if self.request.user.is_principal:
+            return Message.objects.all()
+        else:
+            return Message.objects.filter(Q(author=self.request.user)|Q(receiver=self.request.user))
