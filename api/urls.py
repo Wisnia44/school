@@ -5,7 +5,7 @@ from rest_framework import permissions
 from rest_framework.routers import DefaultRouter
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-from .views import CourseViewSet, GradeViewSet
+from .views import CourseViewSet, GradeViewSet, ForumPostViewSet
 
 schema_view = get_schema_view(
 	openapi.Info(
@@ -23,7 +23,7 @@ schema_view = get_schema_view(
 router = DefaultRouter()
 router.register(r'courses', CourseViewSet, 'courses-api')
 router.register(r'grades', GradeViewSet, 'grades-api')
-
+router.register(r'posts', ForumPostViewSet, 'posts-api')
 
 urlpatterns = [
 	path('token/', obtain_auth_token, name='token'),

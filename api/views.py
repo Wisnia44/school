@@ -1,9 +1,9 @@
 from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.response import Response
-from .serializers import CourseSerializer, GradeSerializer
-from .permissions import GradePermission, CoursePermission
-from courses.models import Course, Grade
+from .serializers import CourseSerializer, GradeSerializer, ForumPostSerializer
+from .permissions import CoursePermission, GradePermission, ForumPostPermission
+from courses.models import Course, Grade, ForumPost
 
 class CourseViewSet(viewsets.ModelViewSet):
     permission_classes = [CoursePermission]
@@ -30,3 +30,17 @@ class GradeViewSet(viewsets.ModelViewSet):
             return Grade.objects.filter(student=self.request.user)
         else:
             return Grade.objects.none()
+
+class ForumPostViewSet(viewsets.ModelViewSet):
+    permission_classes = [ForumPostPermission]
+    serializer_class = ForumPostSerializer
+
+    def get_queryset(self):
+        if self.request.user.is_principal:
+            return ForumPost.objects.all()
+        if self.request.user.is_teacher:
+            return ForumPost.objects.filter(course__teacher=self.request.user)
+        if self.request.user.is_student:
+            return ForumPost.objects.filter(course__students__id=self.request.user.pk)
+        else:
+            return ForumPost.objects.none()

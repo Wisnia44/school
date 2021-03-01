@@ -19,3 +19,15 @@ class GradePermission(permissions.BasePermission):
 			if request.user.is_student and request.method in permissions.SAFE_METHODS:
 				return True
 		return False
+
+class ForumPostPermission(permissions.BasePermission):
+
+	def has_obj_permission(self, request, view, obj):
+		if request.user.is_authenticated:
+			if request.user.is_principal:
+				return True
+			if request.user == obj.author:
+				return True
+			if request.method == 'GET':
+				return True
+		return False
